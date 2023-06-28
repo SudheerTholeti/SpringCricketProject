@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven/>
+    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_cricket"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Sudheer@260"/>
+    </bean>
+
+    <bean id="rest" class="org.springframework.web.client.RestTemplate"/>
+
+    <bean class="com.skytech.cricket.rest.Implementation.RestPlayerServiceImpl" id="restPlayerService">
+        <property name="restTemplate" ref="rest"/>
+    </bean>
+    <bean class="com.skytech.cricket.handler.SuccessHandler" id="handler"></bean>
+
+    <bean class="com.skytech.cricket.validator.PlayerValidator" id="playerValidator">
+        <property name="restPlayerService" ref="restPlayerService"/>
+    </bean>
+</beans>
